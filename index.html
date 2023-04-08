@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Age calculator app</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      @font-face {
+        font-family: "Poppins";
+        src: url(./assets/fonts/Poppins-Regular.ttf) format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Poppins";
+        src: url(./assets/fonts/Poppins-Bold.ttf) format("truetype");
+        font-weight: bold;
+        font-style: normal;
+      }
+      body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Poppins", sans-serif;
+        background-color: hsl(0, 0%, 94%);
+      }
+      .container {
+        width: 500px;
+        height: 400px;
+        background-color: white;
+        border-radius: 15px 15px 125px 15px;
+        padding: 45px;
+        margin: 0 auto;
+      }
+      .inputs {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        gap: 30px;
+      }
+      .input-container {
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+        font-size: 12px;
+      }
+      input {
+        width: 70px;
+        border-radius: 5px;
+        outline: none;
+        margin: 5px 0;
+        border: 1px solid hsl(0, 0%, 86%);
+        padding: 10px 15px;
+        font-weight: bold;
+        font-size: 25px;
+        font-family: "Poppins";
+      }
+      input:hover,
+      input:focus {
+        border-color: hsl(259, 100%, 65%);
+      }
+      hr {
+        margin-left: 0;
+        border: 0;
+        height: 0;
+        width: 500px;
+        box-sizing: content-box;
+        border-top: 1px solid hsl(0, 0%, 86%);
+      }
+      button {
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+        padding: 15px;
+        background-color: hsl(259, 100%, 65%);
+        border: none;
+        position: absolute;
+        right: 40px;
+        top: 130px;
+      }
+      .img {
+        background-image: url(./assets/images/icon-arrow.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 40px;
+        width: 40px;
+      }
+      .display {
+        border-top: 1px solid hsl(0, 0%, 86%);
+        margin-top: 10px;
+      }
+      p {
+        font-size: 70px;
+        font-weight: bolder;
+        font-style: italic;
+        line-height: 0.5rem;
+        color: hsl(0, 0%, 8%);
+      }
+      p span {
+        color: hsl(259, 100%, 65%);
+      }
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+      .error {
+        color: hsl(0, 100%, 67%);
+        font-size: 10px;
+        font-weight: normal;
+        font-style: normal;
+      }
+      @media only screen and (max-width: 390px) {
+        .container {
+          width: 280px;
+          margin: 0 20px;
+          height: 400px;
+          padding: 25px;
+        }
+        input {
+          width: 50px;
+          margin: 5px 0;
+          font-size: 18px;
+        }
+        .inputs {
+          gap: 15px;
+        }
+        button {
+          height: 55px;
+          width: 55px;
+          padding: 15px;
+          right: 155px;
+          top: 125px;
+        }
+        .img {
+          height: 25px;
+          width: 25px;
+        }
+        .display {
+          padding-top: 30px;
+          margin-top: 30px;
+        }
+        p {
+          font-size: 50px;
+        }
+        .error {
+          font-size: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <div class="inputs">
+          <div class="input-container">
+            <label for="date" id="datelabel">Date</label>
+            <input type="number" id="date" name="date" placeholder="DD" />
+            <p class="error" id="dateError">&nbsp;</p>
+          </div>
+          <div class="input-container">
+            <label for="month" id="monthlabel">Month</label>
+            <input type="number" id="month" name="month" placeholder="MM" />
+            <p class="error" id="monthError">&nbsp;</p>
+          </div>
+          <div class="input-container">
+            <label for="year" id="yearlabel">Year</label>
+            <input type="number" id="year" name="year" placeholder="YYYY" />
+            <p class="error" id="yearError">&nbsp;</p>
+          </div>
+        </div>
+        <button type="submit" class="btn-submit">
+          <div class="img"></div>
+        </button>
+      </form>
+      <div class="display">
+        <p><span id="years">--</span> years</p>
+        <p><span id="months">--</span> months</p>
+        <p><span id="days">--</span> days</p>
+      </div>
+    </div>
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Muhamemd Afrar</a>.
+    </div>
+    <script>
+      const form = document.querySelector("form");
+      const birthDate = document.getElementById("date");
+      const birthMonth = document.getElementById("month");
+      const birthYear = document.getElementById("year");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const now = new Date();
+        const birthDay = new Date(
+          birthYear.value,
+          birthMonth.value - 1,
+          birthDate.value
+        );
+        const age = new Date(now - birthDay);
+        const years = age.getFullYear() - 1970;
+        const months = age.getMonth();
+        const days = age.getDate() - 1;
+
+        console.log(birthDay);
+
+        // check for errors
+        if (!birthDate.value) {
+          document.getElementById("date").style.borderColor =
+            "hsl(0, 100%, 67%)";
+          document.getElementById("datelabel").style.color =
+            "hsl(0, 100%, 67%)";
+          document.getElementById("dateError").textContent =
+            "This field is required";
+        } else if (birthDate.value < 1 || birthDate.value > 31) {
+          document.getElementById("dateError").textContent = "invalid Date";
+        } else if (
+          birthDate.value >
+          new Date(birthYear.value, birthMonth.value, 0).getDate()
+        ) {
+          document.getElementById("dateError").textContent = "invalid Date";
+        } else if (!birthMonth.value) {
+          document.getElementById("month").style.borderColor =
+            "hsl(0, 100%, 67%)";
+          document.getElementById("monthlabel").style.color =
+            "hsl(0, 100%, 67%)";
+          document.getElementById("monthError").textContent =
+            "This field is required";
+        } else if (birthMonth.value < 1 || birthMonth.value > 12) {
+          document.getElementById("monthError").textContent = "invalid Month";
+        } else if (!birthYear.value) {
+          document.getElementById("year").style.borderColor =
+            "hsl(0, 100%, 67%)";
+          document.getElementById("yearlabel").style.color =
+            "hsl(0, 100%, 67%)";
+          document.getElementById("yearError").textContent =
+            "This field is required";
+        } else if (birthYear.value > now.getFullYear()) {
+          document.getElementById("yearError").textContent =
+            "Must be in the past";
+        } else {
+          document.getElementById("years").textContent = years;
+          document.getElementById("months").textContent = months;
+          document.getElementById("days").textContent = days;
+        }
+      });
+      birthDate.addEventListener("input", () => {
+        // check the input no longer empty
+        if (birthDate.value) {
+          document.getElementById("date").style.borderColor = "hsl(0, 0%, 86%)";
+          document.getElementById("datelabel").style.color = "hsl(0, 0%, 8%)";
+          document.getElementById("dateError").innerHTML = "&nbsp;";
+        }
+      });
+      birthMonth.addEventListener("input", () => {
+        // check the input no longer empty
+        if (birthMonth.value) {
+          document.getElementById("month").style.borderColor =
+            "hsl(0, 0%, 86%)";
+          document.getElementById("monthlabel").style.color = "hsl(0, 0%, 8%)";
+          document.getElementById("monthError").innerHTML = "&nbsp;";
+        }
+      });
+      birthYear.addEventListener("input", () => {
+        // check the input no longer empty
+        if (birthYear.value) {
+          document.getElementById("year").style.borderColor = "hsl(0, 0%, 86%)";
+          document.getElementById("yearlabel").style.color = "hsl(0, 0%, 8%)";
+          document.getElementById("yearError").innerHTML = "&nbsp;";
+        }
+      });
+    </script>
+  </body>
+</html>
